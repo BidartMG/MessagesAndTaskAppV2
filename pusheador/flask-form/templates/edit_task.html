@@ -1,0 +1,30 @@
+{% extends 'layout.html' %}
+
+{% block body %}
+
+<div class="col-md-4 offset-md-4">
+    <div class="card card-body">
+        <form action="/update/{{ message.0 }}" method="POST">
+            <div class="form-group">
+            <input type="text" name="message" placeholder="message" value="{{ message.1 }}" class="form-control">
+            </div>
+            <div class="form-group">
+                <input type="text" name="sender" placeholder="sender" value="{{ message.2 }}" class="form-control">
+            </div>
+            <div class="form-group">
+                <input type="text" name="receiver" placeholder="receiver" value="{{ message.3 }}" class="form-control">
+            </div>
+            <div class="form-group">
+                <input type="datetime-local" name="date" placeholder="date" value="{{ message.4 }}" class="form-control">
+            </div>
+            <div class="form-group">
+                <input type="time" name="time" placeholder="time" value="{{ message.5 }}" class="form-control">
+            </div>
+            <div class="form-group">
+                <button type="submit" class="btn btn-success btn-block">Save</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+{% endblock %}
