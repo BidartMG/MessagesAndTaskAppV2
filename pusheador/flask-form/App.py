@@ -50,7 +50,7 @@ def index():
             cadena = find_task(find_sender, recibo,date_now)# cadena es una tupla con el json y el status OJO como accederla
             print('print de cadena..........', cadena)
 
-            if cadena[1] == 201:
+            if cadena[1] == 200:
                 print('El status es 201')
                 # Tomo el id que es la primary key autoincremental para eliminarlo mediante query
                 id = find_sender[0][0]
