@@ -43,7 +43,7 @@ def index():
             print(find_sender)
 
             print(date_now.date() == (find_sender[0][4]).date(), '** comparacion date **', date_now.hour == (find_sender[0][4]).hour, ' ** comparacion hora **', date_now.minute == (find_sender[0][4]).minute, ' compare por ultimo los minutos')
-            print('Muestro el tipo de dato de time', type(find_sender[0][5]), 'valor del time: ', find_sender[0][5])
+            print('Muestro CCCAAAMMMBBBIIIOOO X STATUS el tipo de dato de time', type(find_sender[0][5]), 'valor del time: ', find_sender[0][5])
             print('------------------------------------------------------------------------------------------------')
             print("SE VIENE EL PRINT MAS IMPORTANTEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE")
             # acá llamo a la función find_task
@@ -59,14 +59,13 @@ def index():
                 mysql.connection.commit()
 
                 # LO INSERTO EN LA TABLA ASIGNADOS
-                cur.execute('INSERT INTO assigned_messages (id, message, sender, receiver, date, time, estado) VALUES ('
-                            '%s, %s, %s, %s, %s, %s, %s)', (find_sender[0][0], find_sender[0][1], find_sender[0][2],
-                                                            find_sender[0][3], find_sender[0][4], find_sender[0][5],
-                                                            "OCUPADO"))
+                cur.execute('INSERT INTO assigned_messages (id, message, sender, receiver, date, estado) VALUES ('
+                            '%s, %s, %s, %s, %s, %s)', (find_sender[0][0], find_sender[0][1], find_sender[0][2],
+                                                            find_sender[0][3], find_sender[0][4], "OCUPADO"))
                 mysql.connection.commit()
                 print('OK inserté en mensajes asignados... ')
             else:
-                print('El status de cadena NO ES 201')
+                print('El status de cadena NO ES 200')
 
             return cadena # cadena es una tupla que contiene el json(indice 0) y el status(indice 1)
         # Este else pertenece a no encontrar en la BBDD mensajes para el sender
@@ -86,11 +85,10 @@ def add_message():
         sender = request.form['sender']
         receivers = request.form['receiver']
         date = request.form['date']
-        time = request.form['time']
 
         cur = mysql.connection.cursor()
-        cur.execute('INSERT INTO messages (message, sender, receiver, date, time) VALUES (%s, %s, %s, %s, %s)',
-                    (message, sender, receivers, date, time))
+        cur.execute('INSERT INTO messages (message, sender, receiver, date) VALUES (%s, %s, %s, %s)',
+                    (message, sender, receivers, date))
         mysql.connection.commit()
         flash("Contact Added Successfully")
     return redirect(url_for('index'))
@@ -101,8 +99,6 @@ def edit_message(id):
     cur = mysql.connection.cursor()
     cur.execute(f'SELECT * FROM messages WHERE id = {id}')
     data = cur.fetchall()
-    # TODO: Conviene darle formato DDMMYYYY a la fecha recibida desde la BBDD porque queda al reves
-    fecha = data[0][4]
     return render_template('edit_task.html', message=data[0])
 
 
@@ -113,10 +109,9 @@ def update_message(id):
         sender = request.form['sender']
         receivers = request.form['receiver']
         date = request.form['date']
-        time = request.form['time']
         cur = mysql.connection.cursor()
-        cur.execute('UPDATE messages SET message = %s, sender = %s,receiver = %s, date = %s, time = %s WHERE id =%s',
-                    (message, sender, receivers, date, time, id))
+        cur.execute('UPDATE messages SET message = %s, sender = %s,receiver = %s, date = %s WHERE id =%s',
+                    (message, sender, receivers, date, id))
         mysql.connection.commit()
         flash('Message Updated Successfully')
         return redirect(url_for('index'))

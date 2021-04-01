@@ -37,9 +37,7 @@ class Client:
 
     # TODO Falta resolver como responde si no encuentra coincidencias para él en la lista. Camino feliz resuelto
     def conectar_x_post(self, url):
-        """
 
-        """
         payload = Client.get_json_cliente(self)
 
         response = requests.post(url, json=payload)
@@ -53,7 +51,7 @@ class Client:
             contador = 0  # CONTADOR PROVISORIO PARA COMPROBAR QUE FUNCIONA
             mensajes_recibidos = [] # Estructura para guardar las task asignadas a este cliente
             contactos_recibidos = []
-            while contador != 4 and response.status_code == 200:
+            while contador != 10 and response.status_code == 200:
 
                 json = response.json()
                 print(json, 'Este es el json que recibí y exploro')
